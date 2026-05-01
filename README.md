@@ -2,7 +2,7 @@
 
 A real-time 3D renderer built on Apple Metal 4, written in C++ and Objective-C++.
 
-![Terrain render](preview.png)
+![Terrain render](preview.jpg)
 
 ---
 
