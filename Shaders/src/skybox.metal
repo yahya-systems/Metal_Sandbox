@@ -52,5 +52,5 @@ vertex RasterizerData vertexMain(uint vid [[vertex_id]], constant sceneMatrices&
 
 fragment float4 fragmentMain(RasterizerData in [[stage_in]], texturecube<float> sky [[texture(4)]]) {
   constexpr sampler cubeSampler(filter::linear, mip_filter::linear, address::clamp_to_edge);
-  return sky.sample(cubeSampler, in.direction);
+  return float4(sky.sample(cubeSampler, in.direction).xyz * 2, 1.0f);
 }

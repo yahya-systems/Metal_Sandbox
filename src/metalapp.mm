@@ -187,16 +187,16 @@ void init() {
   cleanupStack.insert(sharedEvent);
 
   id<MTLTexture> heightmapTexture = checkResult(loadTextureFromFile(
-      "Textures/planes/Rugged Terrain Height Map EXR.exr",
-      MTLPixelFormatR32Float, MTLStorageModePrivate, device));
+      "Textures/moutain scene/heightmap.exr", MTLPixelFormatR32Float,
+      MTLStorageModePrivate, device));
   cleanupStack.insert(heightmapTexture);
 
   id<MTLTexture> diffuseTexture = checkResult(loadTextureFromFile(
-      "Textures/planes/Rugged Terrain Diffuse PNG.png",
-      MTLPixelFormatRGBA8Unorm, MTLStorageModePrivate, device));
+      "Textures/moutain scene/diffuse.png", MTLPixelFormatRGBA8Unorm,
+      MTLStorageModePrivate, device));
   cleanupStack.insert(diffuseTexture);
 
-  TerrainData terrainData{512, 512, 1, 1.0f, 256, 1.0f};
+  TerrainData terrainData{16, 16, 8, 1.0 / 8.0f, 8, 1.0f};
 
   BufferCreateInfo terrainDataBufferCreateInfo{};
   terrainDataBufferCreateInfo.device = device;
@@ -233,14 +233,16 @@ void init() {
   lightingData = (LightData *)mapBuffer(lightDataBuffer).unwrap();
   cleanupStack.insert(lightDataBuffer);
 
-  const char *faces[6] = {
-      "Textures/cubemap/posx.jpg", "Textures/cubemap/negx.jpg",
-      "Textures/cubemap/posy.jpg", "textures/cubemap/negy.jpg",
-      "Textures/cubemap/posz.jpg", "Textures/cubemap/negz.jpg"};
+  const char *faces[6] = {"Textures/blue sky sunhine/posx.png",
+                          "Textures/blue sky sunhine/negx.png",
+                          "Textures/blue sky sunhine/posy.png",
+                          "Textures/blue sky sunhine/negy.png",
+                          "Textures/blue sky sunhine/posz.png",
+                          "Textures/blue sky sunhine/negz.png"};
 
-  id<MTLTexture> skyboxTexture = checkResult(
-      loadCubemapTextureFromFiles(faces, 2048, 2048, MTLPixelFormatRGBA8Unorm,
-                                  MTLStorageModeShared, device));
+  id<MTLTexture> skyboxTexture = checkResult(loadCubemapTextureFromFiles(
+      faces, 1024, 1024, MTLPixelFormatRGBA8Unorm_sRGB, MTLStorageModeShared,
+      device));
 
   id<MTLAllocation> allocations[] = {terrainDataBuffer, uniformBuffer,
                                      lightDataBuffer,   heightmapTexture,

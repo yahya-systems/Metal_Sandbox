@@ -397,6 +397,7 @@ core::Result<id<MTLTexture>> inline loadCubemapTextureFromFiles(
       return core::Result<id<MTLTexture>>{
           .error = strdup("failed to load image face"), .ok = false};
     }
+
     if (w != width || h != height) {
       for (uint32_t j = 0; j < i + 1; j++) {
         stbi_image_free(imageDatas[j]);
